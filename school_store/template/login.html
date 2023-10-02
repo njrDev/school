@@ -1,0 +1,60 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
+
+    <title>Login CLS</title>
+  </head>
+
+<body>
+<section class="vh-100">
+  <div class="container-fluid">
+    <div class="row" style="height: 100vh;">
+      <div class="col-sm-12 d-flex align-content-center justify-content-center text-black" style="background-image: conic-gradient(from 90deg at bottom right, cyan, rebeccapurple);">
+
+        <div class="px-5 ms-xl-12">
+          <i class="fas fa-crow fa-2x me-3 pt-5 mt-xl-4" style="color: #709085;"></i>
+        </div>
+
+        <div class="d-flex align-items-center justify-content-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5">
+
+          <form action="login" method="post" class="bg-light p-5" style="width: 28rem; border-radius: 20px;">
+            {% csrf_token %}
+
+            <h3 class="fw-normal mb-3 pb-3 text-center font-weight-bold" style="letter-spacing: 1px;">Login</h3>
+
+            <div class="form-outline mb-4">
+              <label class="form-label" for="form2Example18">Username</label>
+              <input type="text" id="form2Example18" name="username" class="form-control form-control-lg" />
+            </div>
+
+            <div class="form-outline mb-4">
+              <label class="form-label" for="form2Example28">Password</label>
+              <input type="password" id="form2Example28" name="password" class="form-control form-control-lg" />
+            </div>
+
+            <div class="pt-1 mb-4">
+              <button class="btn btn-info btn-lg btn-block" type="submit">Login</button>
+            </div>
+
+            <p>Don't have an account? <a href="register" class="link-info">Register here</a></p>
+
+          </form>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  </body>
+</html>

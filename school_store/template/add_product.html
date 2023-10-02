@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section style="width: 100wh;height: 100vh;background-image: conic-gradient(from 90deg at bottom right, cyan, rebeccapurple);">
+  <div class="row d-flex justify-content-center align-items-center" style="width: 100%;">
+    <div class="col-md-10">
+      <h3 class="text-center p-4 text-light">Fill Out</h3>
+      <form method="POST" action="{% url 'form' %}" style="height: 100%;overflow: hidden;">
+        {% csrf_token %}
+        <!-- 2 column grid layout with text inputs for the first and last names -->
+        <div class="row">
+          <div class="col">
+            <div class="form-outline">
+              <label class="form-label text-light" for="name">Full Name</label>
+              <input type="text" required id="name" name="name" class="form-control" />
+            </div>
+          </div>
+        </div>
+      
+        <!-- Text input -->
+        <div class="row">
+          <div class="col">
+            <div class="form-outline mb-3">
+              <label class="form-label text-light mt-2" for="dob">Date of Birth</label>
+              <input type="date" id="dob" name="dob" class="form-control" />
+            </div>    
+          </div>
+          <div class="col">
+            <div class="form-outline mb-3">
+              <label class="form-label text-light mt-2" for="age">Age</label>
+              <input type="number" required id="age" name="age" class="form-control" />
+            </div>    
+          </div>
+          <div class="col">
+            <div class="form-outline mb-3">
+              <label class="form-label text-light mt-2" for="gender">Gender</label>
+              <select class="w-100 p-1" required name="gender" id="gender">
+                <option value="">select</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="others">Others</option>
+              </select>
+            </div>    
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4">
+            <div class="form-outline">
+              <label class="form-label text-light" for="phone">Phone Number</label>
+              <input type="text" required id="phone" name="phone" class="form-control" />
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="form-outline">
+              <label class="form-label text-light" for="category">Department</label>
+              <select  class="w-100 p-1" name="category" id="category">
+                <option value="">Select</option>
+                {% for category in categories %}
+                <option value="{{category.id}}">{{category.name}}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="form-outline">
+              <label class="form-label text-light" for="subcategory">Courses</label>
+              <select class="w-100 p-1" name="subcategory" id="subcategory">
+
+              </select>
+            </div>
+          </div>
+        </div>
+  
+        <div class="form-outline mb-2 mt-2">
+          <label class="form-label text-light" for="address">Address</label>
+          <input type="text" id="address" name="address" class="form-control" />
+        </div>
+  
+  
+        <div class="row mb-4">
+          <div class="col-5">
+            <div class="form-outline">
+              <label class="form-label text-light" for="purpose">Purpose</label>
+              <select class="w-100 p-1" name="purpose" id="purpose">
+                <option value="0">Select</option>
+                <option value="1">Enquiry</option>
+                <option value="1">Place Order</option>
+                <option value="1">Return</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-7">
+            <label class="form-label text-light" for="form6Example2">Materials Provide</label>
+            <div class="row">
+            <div class="col-3">
+            <div class="form-outline">
+              
+              <div class="d-flex">
+                <input type="checkbox" value="DebitNote"  id="dn" class="form-control mr-2" style="width: 20px;height: 20px;" />
+              <label class="form-label text-light" for="form6Example2">Debit Note Book</label>
+              </div>
+            </div>
+          </div>
+            <div class="col-3">
+            <div class="form-outline">
+              <div class="d-flex">
+                <input type="checkbox" value="ep"  id="ep" class="form-control mr-2" style="width: 20px;height: 20px;" />
+              <label class="form-label text-light" for="ep">Exam Paper</label>
+              </div>
+            </div>
+          </div>
+            <div class="col-3">
+            <div class="form-outline">
+              
+              <div class="d-flex">
+                <input type="checkbox" value="pen"  id="form6Example2" class="form-control mr-2" style="width: 20px;height: 20px;" />
+              <label class="form-label text-light" for="form6Example2">Pen</label>
+              </div>
+            </div>
+          </div>
+        </div>
+          </div>
+  
+  
+          
+        </div>
+      
+        <!-- Submit button -->
+        <div class="row">
+          <div class="col-6">
+            <button type="submit" class="btn btn-light font-weight-bold btn-block mb-4">Submit</button>
+          </div>
+          <div class="col-6">
+            <button type="submit" class="btn btn-secondary font-weight-bold btn-block mb-4"><a style="text-decoration: none;color: white;" href="logout">Logout</a></button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  </section>
+  {% endblock %}
+  
+  {% block scripts %}
+  <!-- JavaScript for dependent dropdown -->
+  <script>
+    let category = document.getElementById('category');
+    let subcategory = document.getElementById('subcategory');
+    category.onchange = () => getSubcategory(category.value);
+    document.addEventListener('DOMContentLoaded',getSubcategory(category.value));
+
+    function getSubcategory(categoryId){
+      let url = `/get_subcategories/${categoryId}/`;
+      subcategory.innerHTML = '';
+      fetch(url, {
+        method: "GET",
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }
+      })
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        for(let d of data){
+          subcategory.innerHTML += `<option value=${d.id}>${d.name}</option>`;
+        }
+      })
+      .catch(error => {
+        console.log(error)
+      })
+    }
+  </script>
+ 
+ {% endblock scripts %}
